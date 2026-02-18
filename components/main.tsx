@@ -63,7 +63,7 @@ const handleLogin = async () => {
     }
 };
 
-    const [value, setValue] = useState(10)
+    const [value, setValue] = useState(1980)
 
 async function enviarpagamento() {
 
@@ -89,7 +89,7 @@ async function enviarpagamento() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                amount: value * 0.1,
+                amount: value * 0.01,
                 external_id: crypto.randomUUID(),
                 postbackUrl: "https://0f9f-177-104-241-8.ngrok-free.app/api/webhook",
                 payerQuestion: "pag. rifa",
@@ -180,10 +180,11 @@ async function enviarpagamento() {
             <div className="flex items-center gap-2 rounded-xl border p-2 justify-center">
                 
                 <div>
-                    <Button size="icon" variant="ghost" onClick={() => setValue((v) => 0)}>
+                    <Button size="icon" variant="ghost" onClick={() => setValue((v) => 1980)}>
                         <Trash2 className="h-4 w-4" />
                     </Button>
-                    <Button size="icon" variant="ghost" onClick={() => setValue((v) => Math.max(0, v - 1))}>
+                    <Button size="icon" variant="ghost" onClick={() => setValue((v) => Math.max(10, v - 1))}
+            disabled={value <= 1980}>
                         <Minus className="h-4 w-4" />
                     </Button>
                 </div>
@@ -216,7 +217,7 @@ async function enviarpagamento() {
     ) : (
         <>
             <ArrowRight className="h-4 w-4" />
-            Participar R${(value * 0.1).toFixed(2)}
+            Participar R${(value * 0.01).toFixed(2)}
         </>
     )}
 </Button>
