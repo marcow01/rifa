@@ -3,12 +3,12 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth"
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC73UfQBPU0bLAwalmtg_VDJMfi7L39X34",
-  authDomain: "bancodados-e5ddf.firebaseapp.com",
-  projectId: "bancodados-e5ddf",
-  storageBucket: "bancodados-e5ddf.firebasestorage.app",
-  messagingSenderId: "214365971585",
-  appId: "1:214365971585:web:2bb05e05dd75b8d66a5980"
+  apiKey: process.env.NEXT_PUBLIC_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGEBUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
+  appId: process.env.NEXT_PUBLIC_APPID
 };
 
 const app = initializeApp(firebaseConfig);
