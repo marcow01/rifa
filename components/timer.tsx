@@ -53,9 +53,10 @@ useEffect(() => {
 
   return (
     <div className="space-y-2">
-      <p className="text-muted-foreground text-center">
+      <p className="flex justify-center gap-2 mt-10 items-center text-sm md:text-sm font-extrabold tracking-tight text-muted-foreground leading-tight text-center">
+      
         Você tem{" "}
-        <span className="font-bold text-lg text-primary">
+        <span className="ap-2 items-center text-xl sm:text-2xl md:text-3xl lg:text-3xl font-extrabold tracking-tight text-primary leading-tight">
           {formatTime(timeLeft)}
         </span>{" "}
         para pagar!

@@ -33,10 +33,10 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background">
+    <header className="sticky top-0 z-50 w-full bg-primary text-secondary">
       <nav className="mx-auto flex max-w-2xl items-center justify-between px-4 py-3">
         {/* esquerda */}
-        <Button variant="ghost" size="icon" asChild>
+        <Button variant="ghost" size="icon" asChild className="transition hover:opacity-80 active:scale-[0.98]">
           <Link href="/">
             <Menu className="h-5 w-5" />
           </Link>
@@ -45,18 +45,18 @@ export default function Navbar() {
         {/* centro */}
         <div className="absolute left-1/2 -translate-x-1/2">
           <Link href="/" className="text-lg font-semibold">
-            rifa.com
+            1 CENTAVO 1000 NO PIX HOJE!
           </Link>
         </div>
 
         {/* direita */}
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" className="transition hover:opacity-80 active:scale-[0.98] cursor-pointer">
             <Headset className="h-5 w-5" />
           </Button>
 
           {!user && (
-            <Button variant="ghost" size="icon" onClick={login}>
+            <Button variant="ghost" size="icon" onClick={login} className="cursor-pointer">
               <UserRound className="h-5 w-5" />
             </Button>
           )}

@@ -125,7 +125,7 @@ catch (err) {
   return (
     <>
     
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}> 
       <DialogContent className="sm:max-w-md">
         <DialogTitle className="mb-2">
         <a className="text-lg font-semibold">Complete o cadastro</a>
@@ -230,13 +230,13 @@ catch (err) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="outline-none">
-            <img src={user.photoURL ?? ""} className="h-8 w-8 rounded-full" />
+            <img src={user.photoURL ?? ""} className="h-8 w-8 rounded-full cursor-pointer" />
         </button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-56">
 
-        <DropdownMenuLabel>
+        <DropdownMenuLabel className="text-sm font-bold">
           {user.displayName || "Usuário"}
         </DropdownMenuLabel>
 

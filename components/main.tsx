@@ -3,7 +3,8 @@
 import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button"
-import { Minus, Plus, ArrowRight, Trash2, Info, Loader2 } from "lucide-react"
+import { Minus, Plus, ArrowRight, Trash2, Info, Loader2, ShoppingBasket, Trophy } from "lucide-react"
+import { FaTrophy } from "react-icons/fa6";
 import { useState } from "react";
 import { db } from "@/lib/firebase"
 import { doc, getDoc, setDoc } from "firebase/firestore"
@@ -13,6 +14,7 @@ import { QRCodeSVG } from "qrcode.react";
 import Timer from "@/components/timer"
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
+import Image from 'next/image'
 import {
   Dialog,
   DialogTrigger,
@@ -132,19 +134,47 @@ async function enviarpagamento() {
     <main className="py-2">
       <div className="mx-auto w-full max-w-2xl px-4">
 
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
+        <div className="relative w-full h-[300px] overflow-hidden rounded-2xl group">
+  {/* A Imagem de Fundo */}
+  <img
+    src="/banner.jpg" 
+    alt="Prêmio Principal"
+    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+  />
+
+  {/* O Overlay (Gradiente para dar leitura ao texto) */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+  {/* O Conteúdo Sobreposto */}
+  <div className="absolute inset-0 flex flex-col justify-end p-6">
+    {/* <span className="text-white text-sm font-nromal tracking-wider">
+      Campanhas em destaque
+    </span> */}
+    <h2 className="text-white text-2xl md:text-3xl font-bold leading-tight">
+      Concorra a mais de R$ 1.000,00 <br/> por apenas R$ 0,01!
+    </h2>
+    <p className="text-gray-200 text-sm mt-2 font-medium">
+     Adquira já o seu bilhete da sorte!
+    </p>
+  </div>
+</div>
+
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 mt-4">
 
             {Array.from({ length: 3 }).map((_, i) => {
             const amount = 200 * (i + 1);
 
             return (
                 <button key={i} onClick={() => setValue((v) => v + amount)}>
-                    <Card className="rounded-xl transition hover:opacity-80 active:scale-[0.98]">
+                    <Card 
+          className={`rounded-xl transition hover:opacity-80 active:scale-[0.98] 
+            ${i === 1 ? 'bg-green-700 text-white' : 'bg-primary text-secondary'}`}
+        >
                         <CardHeader>
-                        <CardTitle>+{amount}</CardTitle>
+                        <CardTitle className="font-bold text-3xl">+{amount}</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-sm text-muted-foreground">Selecionar</p>
+                            <p className={`text-lg text-center ${i === 1 ? 'text-white' : 'text-muted-foreground'}`}>SELECIONAR</p>
                         </CardContent>
                     </Card>
                 </button>
@@ -160,12 +190,12 @@ async function enviarpagamento() {
 
             return (
                 <button key={i} onClick={() => setValue((v) => v + amount)}>
-                    <Card className="rounded-xl transition hover:opacity-80 active:scale-[0.98]">
+                    <Card className="rounded-xl transition hover:opacity-80 active:scale-[0.98] bg-primary text-secondary">
                         <CardHeader>
-                        <CardTitle>+{amount}</CardTitle>
+                        <CardTitle className="font-bold text-3xl">+{amount}</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-sm text-muted-foreground">Selecionar</p>
+                            <p className="text-lg text-center text-muted-foreground">SELECIONAR</p>
                         </CardContent>
                     </Card>
                 </button>
@@ -201,11 +231,10 @@ async function enviarpagamento() {
 
             </div>
 
-
             <Dialog open={open} onOpenChange={setOpen}>
                 
 <Button
-    className="flex items-center justify-center gap-2 rounded-xl p-6 min-w-[200px]"
+    className="flex items-center justify-center gap-2 rounded-xl p-6 min-w-[200px] bg-green-700"
     onClick={enviarpagamento}
     disabled={loading} // Impede cliques duplos enquanto processa
 >
@@ -224,20 +253,42 @@ async function enviarpagamento() {
 
 <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto">
         
-<DialogTitle>
-    <div className="text-center">
-        <p>Realize o pagamento pra continuar</p>
-    </div>
+<DialogTitle className="">
     </DialogTitle>
 
   {!paymentData ? (
-    <p>Gerando QR Code...</p>
+    <p>Gerando pagamento...</p>
   ) : (
     <>        
 
     <div>
         
     <Timer dueDate={paymentData?.calendar?.dueDate} />
+
+    <div className="relative w-full h-[200px] overflow-hidden rounded-xl group mt-4">
+  {/* A Imagem de Fundo */}
+  <img
+    src="/banner2.jpg" 
+    alt="Prêmio Principal"
+    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+  />
+
+  {/* O Overlay (Gradiente para dar leitura ao texto) */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+  {/* O Conteúdo Sobreposto */}
+  <div className="absolute inset-0 flex flex-col justify-end p-6">
+    {/* <span className="text-white text-sm font-nromal tracking-wider">
+      Campanhas em destaque
+    </span> */}
+    <h2 className="text-white text-2xl md:text-3xl font-bold leading-tight">
+        
+    </h2>
+    <p className="text-gray-200 text-sm mt-2 font-medium">
+     Realize o pagamento pra obter seus números.
+    </p>
+  </div>
+</div>
     
 
     </div>
@@ -264,7 +315,7 @@ async function enviarpagamento() {
             <div className="rounded-sm p-4 w-6 h-6 bg-primary text-white text-center flex justify-center items-center mr-2">
                 <p>1</p>
             </div>
-            <a>Copie o código PIX abaixo.</a>
+            <a className="text-sm md:text-lg font-extrabold tracking-tight leading-tight text-primary">Copie o código PIX abaixo.</a>
 
         </div>
 
@@ -284,7 +335,7 @@ async function enviarpagamento() {
                 <div className="rounded-sm p-4 w-6 h-6 bg-primary text-white text-center flex justify-center items-center mr-2">
                     <p>2</p>
                 </div>
-                <a>Abra o app do seu banco e escolha a opção PIX, como se fosse fazer uma transferência.</a>
+                <a className="text-sm md:text-lg font-extrabold tracking-tight leading-tight text-primary">Abra o app do seu banco e escolha a opção PIX, como se fosse fazer uma transferência.</a>
 
             </div>
 
@@ -294,7 +345,7 @@ async function enviarpagamento() {
             <div className="rounded-sm p-4 w-6 h-6 bg-primary text-white text-center flex justify-center items-center mr-2">
                 <p>3</p>
             </div>
-            <a>3. Selecione a opção PIX cópia e cola, cole a chave copiada e confirme o pagamento.</a>
+            <a  className="text-sm md:text-lg font-extrabold tracking-tight leading-tight text-primary">Selecione a opção PIX cópia e cola, cole a chave copiada e confirme o pagamento.</a>
 
         </div>
 
@@ -304,40 +355,48 @@ async function enviarpagamento() {
 
 </div>
 
-        <div className="mt-4 p-4 rounded-lg space-y-2 border">
-  <p className="text-sm">
-    <span className="font-semibold">ID</span> {paymentData.transactionId}
-  </p>
+<div className="mt-4 p-4 rounded-lg space-y-4">
   
-  <p className="text-sm">
-    <span className="font-semibold">Status Atual:</span> 
-    <span className="ml-2 px-2 py-0.5 bg-yellow-100 text-yellow-800 rounded-full text-xs">
-      {paymentData.status}
+  {/* ID */}
+  <p className="text-sm md:text-lg font-extrabold tracking-tight leading-tight text-primary">
+    ID <span className="font-normal tracking-tight leading-tight text-primary ml-1">
+      {paymentData.transactionId}
     </span>
   </p>
 
-  <p className="text-sm">
-    <span className="font-semibold">Valor a Pagar:</span> 
-    <span className="text-primary font-bold"> R$ {paymentData.amount.toFixed(2)}</span>
+  {/* Valor */}
+  <p className="text-sm md:text-lg font-extrabold tracking-tight leading-tight text-primary">
+    Valor a Pagar <span className="font-normal tracking-tight leading-tight text-primary ml-1">
+      R$ {paymentData.amount.toFixed(2)}
+    </span>
   </p>
 
-  <p className="text-sm">
-    <span className="font-semibold">CPF do Pagador:</span> {paymentData.debtor?.document}
+  {/* CPF */}
+  <p className="text-sm md:text-lg font-extrabold tracking-tight leading-tight text-primary">
+    CPF do Pagador <span className="font-normal tracking-tight leading-tight text-primary ml-1">
+      {paymentData.debtor?.document}
+    </span>
   </p>
 
-  <p className="text-sm">
-    <span className="font-semibold">Nome no Registro:</span> {paymentData.debtor?.name || "Não informado"}
+  {/* Nome */}
+  <p className="text-sm md:text-lg font-extrabold tracking-tight leading-tight text-primary">
+    Nome no Registro <span className="font-normal tracking-tight leading-tight text-primary ml-1">
+      {paymentData.debtor?.name || "Não informado"}
+    </span>
   </p>
 
-  <p className="text-sm">
-    <span className="font-semibold">Vencimento Original:</span> {paymentData.calendar?.dueDate}
-  </p>
+  {/* Vencimento */}
+  <p className="text-sm md:text-lg font-extrabold tracking-tight leading-tight text-primary">
+    Vencimento Original <span className="font-normal tracking-tight leading-tight text-primary ml-1">
+      {paymentData.calendar?.dueDate}
+    </span>
 
-  <p className="text-xs text-muted-foreground italic mt-2">
+    <p className="text-xs text-muted-foreground italic mt-4">
     * Verifique se os dados acima conferem antes de confirmar no app do seu banco.
   </p>
-</div>
+  </p>
 
+</div>
     </>
   )}
 </DialogContent>
@@ -345,11 +404,20 @@ async function enviarpagamento() {
 
         </div>
 
-        <div className="flex items-center gap-2 rounded-lg border p-2 justify-center mt-2">
-                
-            <a>Consulte o regulamento</a>
-
+                <div className="flex items-center gap-2 rounded-xl p-2 justify-center mt-2 mb-6 bg-gray-200 text-primary">
+            <ShoppingBasket className="h-4 w-4 "/>
+            Minhas transações
         </div>
+
+        <div className="flex justify-center gap-2 mt-10 items-center text-xl sm:text-2xl md:text-3xl lg:text-3xl  font-extrabold tracking-tight text-primary leading-tight">
+                <a>Disputa Ranking</a>
+                <FaTrophy/>
+            </div>
+
+            {/* Subtítulo */}
+            <p className="text-center mt-2 text-sm md:text-sm mb-2 text-muted-foreground font-medium max-w-[600px] mx-auto">
+                O Primeiro colocado tem chances extras de ganhar! E fique tranquilo, caso não ganhe, o valor será devolvido integralmente. Confira todos os detalhes em nossos <span className="font-bold text-primary">Termos e Condições.</span>
+            </p>
 
       </div>
 

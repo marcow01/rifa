@@ -52,8 +52,8 @@ useEffect(() => {
       <Card className="w-full max-w-2xl rounded-sm border-none shadow-none ring-0">
 
         <CardContent className="space-y-2">
- <a href="" className="text-lg font-semibold">Transações</a>
-        <p className="text-sm text-muted-foreground">Confira todos as movimentações da sua conta: </p>
+ <a href="" className="text-xl sm:text-2xl md:text-3xl lg:text-3xl  font-extrabold tracking-tight text-primary leading-tight">Transações</a>
+        <p className="mt-2 text-sm md:text-sm mb-2 text-muted-foreground font-medium">Histórico de Participações: Aqui você acompanha o status de cada pedido realizado. Verifique se o seu pagamento foi confirmado para garantir sua posição no ranking e seus títulos para o sorteio. Pagamentos via Pix são processados instantaneamente.</p>
 
           {/* item */}
 {payments.map((payment) => (
