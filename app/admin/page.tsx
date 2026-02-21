@@ -75,7 +75,7 @@ export default function AdminDashboard() {
   fetchDashboardData();
 }, [user]);
 
-  if (!authorized) return <p>Carregando painel de controle...</p>;
+  if (!authorized) return <p className="p-4">Carregando painel de controle...</p>;
 
   return (
         <>

@@ -82,6 +82,19 @@ useEffect(() => {
 
       <div>
         <p className="text-sm font-medium">R${payment.amount}</p>
+          {payment.status === "paid" && (
+            <>
+            <div className="flex gap-1 text-sm text-muted-foreground">
+              <a>
+                [{payment.startNumber} ~
+              </a>
+                <a>{payment.endNumber}]</a>
+            </div>
+
+            <a className="text-sm text-muted-foreground">total de números: {payment.endNumber - payment.startNumber}</a>
+
+            </>
+          )}
         <p className="text-sm text-muted-foreground">{payment.status}</p>
         <p className="text-sm text-muted-foreground">{payment.calendar}</p>
         <p className="text-sm text-muted-foreground">{payment.debtor}</p>

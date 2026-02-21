@@ -16,6 +16,7 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import Image from 'next/image'
 import { useRouter } from "next/navigation";
+import { FaGoogle } from "react-icons/fa";
 import {
   Dialog,
   DialogTrigger,
@@ -70,7 +71,6 @@ const handleLogin = async () => {
     const [value, setValue] = useState(1980)
 
 async function enviarpagamento() {
-
     if (!user || !hasProfile) {
         setLoginOpen(true);
         return;
@@ -79,11 +79,9 @@ async function enviarpagamento() {
     setLoading(true);
 
     try {
-        // Busca manual para garantir que pegamos o cadastro mais recente
         const dadosusuario = await getuser(user.uid);
 
         if (!dadosusuario) {
-            // Se REALMENTE não houver cadastro no banco, abre o aviso
             setLoginOpen(true);
             setLoading(false);
             return;
@@ -95,8 +93,7 @@ async function enviarpagamento() {
             body: JSON.stringify({
                 amount: value * 0.01,
                 external_id: crypto.randomUUID(),
-                postbackUrl: "https://0f9f-177-104-241-8.ngrok-free.app/api/webhook",
-                payerQuestion: "pag. rifa",
+                // Removi a postbackUrl fixa daqui pois sua API já monta ela usando env
                 payer: {
                     name: dadosusuario.name,
                     document: dadosusuario.cpf,
@@ -107,12 +104,14 @@ async function enviarpagamento() {
 
         const data = await res.json();
         
-        // Seta os dados para o Modal
+        // Verifica se a API retornou erro antes de prosseguir
+        if (!res.ok) throw new Error(data.error || "Erro ao gerar Pix");
+
         setPaymentData(data);
         const idtransacao = data.transactionId;
         setTransactionId(idtransacao);
 
-        // Salva no banco
+        // SALVANDO NO BANCO COM O INTERVALO
         await setDoc(doc(db, "payments", idtransacao), {
             status: "pending",
             calendar: data.calendar.dueDate,
@@ -121,17 +120,19 @@ async function enviarpagamento() {
             id: idtransacao,
             createdAt: new Date(),
             userid: user.uid,
+            // AQUI ESTÃO OS NOVOS CAMPOS QUE VÊM DA SUA API:
+            startNumber: data.numbersInterval.startNumber,
+            endNumber: data.numbersInterval.endNumber,
         });
 
-        setOpen(true); // Abre o modal apenas quando tudo estiver pronto
+        setOpen(true); 
     } catch (error) {
         console.error("Erro ao processar pagamento:", error);
         alert("Ocorreu um erro ao gerar o seu Pix. Tente novamente.");
     } finally {
-        setLoading(false); // Desativa o spin mesmo em caso de erro
+        setLoading(false);
     }
 }
-
   return (
     <main className="py-2">
       <div className="mx-auto w-full max-w-2xl px-4">
@@ -236,7 +237,7 @@ async function enviarpagamento() {
             <Dialog open={open} onOpenChange={setOpen}>
                 
 <Button
-    className="flex items-center justify-center gap-2 rounded-xl p-6 min-w-[200px] bg-green-700"
+    className="flex items-center justify-center gap-2 rounded-xl p-6 min-w-[200px] bg-green-700 cursor-pointer"
     onClick={enviarpagamento}
     disabled={loading} // Impede cliques duplos enquanto processa
 >
@@ -406,7 +407,7 @@ async function enviarpagamento() {
 
         </div>
 
-                <Button onClick={() => router.push("/payments")} className="flex items-center gap-2 rounded-lg p-4 justify-center mt-2 mb-6 bg-gray-200 text-primary w-full">
+                <Button onClick={() => router.push("/payments")} className="flex items-center gap-2 rounded-lg p-4 justify-center mt-2 mb-6 bg-gray-200 text-primary w-full cursor-pointer">
             <ShoppingBasket className="h-4 w-4 "/>
             Minhas transações
         </Button>
@@ -445,6 +446,7 @@ async function enviarpagamento() {
           className="w-full py-6 text-lg flex gap-3 mt-2"
           variant="outline"
         >
+            <FaGoogle />
           Entrar com Google
         </Button>
       ) : (

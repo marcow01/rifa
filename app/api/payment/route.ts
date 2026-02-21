@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { runTransaction, doc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 const PIXUP_AUTH_URL = "https://api.pixupbr.com/v2/oauth/token";
 const PIXUP_QRCODE_URL = "https://api.pixupbr.com/v2/pix/qrcode";
@@ -49,7 +51,24 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const token = await getPixupToken();
-    
+    const quantity = Math.round(body.amount * 100);
+
+    const counterRef = doc(db, "settings", "numbers_counter");
+    const interval = await runTransaction(db, async (transaction) => {
+      const counterDoc = await transaction.get(counterRef);
+      
+      // Se não existir, começa do 0
+      const lastNumber = counterDoc.exists() ? counterDoc.data().lastNumber : 0;
+      
+      const startNumber = lastNumber + 1;
+      const endNumber = lastNumber + quantity;
+
+      // Atualiza o contador para o próximo
+      transaction.set(counterRef, { lastNumber: endNumber }, { merge: true });
+
+      return { startNumber, endNumber };
+    });
+
 
     const pixRes = await fetch(PIXUP_QRCODE_URL, {
       method: "POST",
@@ -67,13 +86,17 @@ export async function POST(req: Request) {
     });
 
     const pixData = await pixRes.json();
-    console.log(pixData)
+    //console.log(pixData)
 
     if (!pixRes.ok) {
         return NextResponse.json({ error: "Erro na PixUp", detail: pixData }, { status: pixRes.status });
     }
 
-    return NextResponse.json(pixData);
+    return NextResponse.json({
+      ...pixData,
+      numbersInterval: interval // { startNumber: 1, endNumber: 1980 }
+    });
+
   } catch (err: any) {
     console.error("ERRO_PIX_ROUTE:", err.message);
     return NextResponse.json({ error: "Erro interno ao processar PIX" }, { status: 500 });
