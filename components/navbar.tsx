@@ -41,11 +41,11 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full bg-primary text-secondary">
       <nav className="mx-auto flex max-w-2xl items-center justify-between px-4 py-3">
         {/* esquerda */}
-        <Button variant="ghost" size="icon" asChild className="transition hover:opacity-80 active:scale-[0.98]">
+        {/* <Button variant="ghost" size="icon" asChild className="transition hover:opacity-80 active:scale-[0.98]">
           <Link href="/">
             <Menu className="h-5 w-5" />
           </Link>
-        </Button>
+        </Button> */}
 
         {/* centro */}
         <div className="absolute left-1/2 -translate-x-1/2 text-center">

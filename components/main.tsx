@@ -140,7 +140,7 @@ async function enviarpagamento() {
   {/* A Imagem de Fundo */}
   <img
     src="/banner.jpg" 
-    alt="Prêmio Principal"
+    alt="banner sorteio"
     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
   />
 
