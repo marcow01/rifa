@@ -15,6 +15,7 @@ import Timer from "@/components/timer"
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import Image from 'next/image'
+import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogTrigger,
@@ -24,6 +25,7 @@ import {
 
 export default function Main() {
 
+    const router = useRouter();
     const [loginOpen, setLoginOpen] = useState(false);
     const { user, hasProfile } = useProfile();
     const [open, setOpen] = useState(false);
@@ -404,10 +406,10 @@ async function enviarpagamento() {
 
         </div>
 
-                <div className="flex items-center gap-2 rounded-xl p-2 justify-center mt-2 mb-6 bg-gray-200 text-primary">
+                <Button onClick={() => router.push("/payments")} className="flex items-center gap-2 rounded-lg p-4 justify-center mt-2 mb-6 bg-gray-200 text-primary w-full">
             <ShoppingBasket className="h-4 w-4 "/>
             Minhas transações
-        </div>
+        </Button>
 
         <div className="flex justify-center gap-2 mt-10 items-center text-xl sm:text-2xl md:text-3xl lg:text-3xl  font-extrabold tracking-tight text-primary leading-tight">
                 <a>Disputa Ranking</a>

@@ -258,7 +258,7 @@ catch (err) {
             Configurações
           </DropdownMenuItem>
         
-          <DropdownMenuItem onClick={() => router.push("payments")}>
+          <DropdownMenuItem onClick={() => router.push("/payments")}>
             <Wallet className="mr-2 h-4 w-4"/>
             Transações
           </DropdownMenuItem>
