@@ -420,10 +420,6 @@ async function enviarpagamento() {
                 <a>Disputa Ranking</a>
                 <FaTrophy/>
             </div> */}
-            
-            <p className="text-center mt-2 text-sm md:text-sm mb-2 text-muted-foreground font-medium max-w-[600px] mx-auto">
-                O Primeiro colocado tem chances extras de ganhar! E fique tranquilo, caso não ganhe, o valor será devolvido integralmente. Confira todos os detalhes em nossos <span className="font-bold text-primary">Termos e Condições.</span>
-            </p>
 
       </div>
 
