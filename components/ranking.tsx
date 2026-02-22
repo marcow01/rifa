@@ -27,7 +27,7 @@ const getRankStyle = (index: number) => {
 return (
     <>
     
-        <main className="py-2 mb-10">
+        <main className="mb-10">
       <div className="mx-auto w-full max-w-2xl px-4">
 
         {ranking.map((user, index) => (

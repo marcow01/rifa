@@ -68,7 +68,7 @@ const handleLogin = async () => {
     }
 };
 
-    const [value, setValue] = useState(1)
+    const [value, setValue] = useState(1980)
 
 async function enviarpagamento() {
     if (!user || !hasProfile) {
@@ -91,7 +91,7 @@ async function enviarpagamento() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                amount: value,
+                amount: value * 0.01,
                 external_id: crypto.randomUUID(),
                 // Removi a postbackUrl fixa daqui pois sua API já monta ela usando env
                 payer: {
@@ -412,12 +412,15 @@ async function enviarpagamento() {
             Minhas transações
         </Button>
 
-        <div className="flex justify-center gap-2 mt-10 items-center text-xl sm:text-2xl md:text-3xl lg:text-3xl  font-extrabold tracking-tight text-primary leading-tight">
+        <div className="flex justify-center">
+            <img src="/ranking.png" alt="" className="w-[50%]"/>
+        </div>
+
+        {/* <div className="flex justify-center gap-2 mt-10 items-center text-xl sm:text-2xl md:text-3xl lg:text-3xl  font-extrabold tracking-tight text-primary leading-tight">
                 <a>Disputa Ranking</a>
                 <FaTrophy/>
-            </div>
-
-            {/* Subtítulo */}
+            </div> */}
+            
             <p className="text-center mt-2 text-sm md:text-sm mb-2 text-muted-foreground font-medium max-w-[600px] mx-auto">
                 O Primeiro colocado tem chances extras de ganhar! E fique tranquilo, caso não ganhe, o valor será devolvido integralmente. Confira todos os detalhes em nossos <span className="font-bold text-primary">Termos e Condições.</span>
             </p>
