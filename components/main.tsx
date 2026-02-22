@@ -62,13 +62,13 @@ export default function Main() {
 const handleLogin = async () => {
     try {
         await signInWithPopup(auth, googleProvider);
-        setLoginOpen(false); // Fecha o modal após o login
+        setLoginOpen(false); 
     } catch (error) {
         console.error("Erro ao fazer login:", error);
     }
 };
 
-    const [value, setValue] = useState(1980)
+    const [value, setValue] = useState(100)
 
 async function enviarpagamento() {
     if (!user || !hasProfile) {
