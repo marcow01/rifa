@@ -68,7 +68,7 @@ const handleLogin = async () => {
     }
 };
 
-    const [value, setValue] = useState(100)
+    const [value, setValue] = useState(1)
 
 async function enviarpagamento() {
     if (!user || !hasProfile) {
@@ -91,7 +91,7 @@ async function enviarpagamento() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                amount: value * 0.1,
+                amount: value,
                 external_id: crypto.randomUUID(),
                 // Removi a postbackUrl fixa daqui pois sua API já monta ela usando env
                 payer: {
