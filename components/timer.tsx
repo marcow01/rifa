@@ -52,11 +52,11 @@ useEffect(() => {
   const progresstimer = Math.max(0, Math.min(100, (timeLeft / totalMs) * 100))
 
   return (
-    <div className="space-y-2">
-      <p className="flex justify-center gap-2 mt-10 items-center text-sm md:text-sm font-extrabold tracking-tight text-muted-foreground leading-tight text-center">
+    <div className="">
+      <p className="flex justify-center gap-2 items-center text-sm md:text-sm font-medium tracking-tight text-muted-foreground leading-tight text-center">
       
         Você tem{" "}
-        <span className="ap-2 items-center text-xl sm:text-2xl md:text-3xl lg:text-3xl font-extrabold tracking-tight text-primary leading-tight">
+        <span className="ap-2 items-center text-xl sm:text-2xl md:text-3xl lg:text-3xl font-extrabold text-primary text-green-700">
           {formatTime(timeLeft)}
         </span>{" "}
         para pagar!

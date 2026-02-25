@@ -49,6 +49,51 @@ const handleLogout = async () => {
     console.error("Erro ao sair:", err);
   }
 };
+
+  const initial =
+    user.displayName?.charAt(0)?.toUpperCase() ||
+    user.email?.charAt(0)?.toUpperCase() ||
+    "U";
+
+function formatCpf(value: string) {
+  if (!value) return "";
+
+  const cleaned = value.replace(/\D/g, "");
+
+  if (cleaned.length !== 11) return value;
+
+  return cleaned.replace(
+    /(\d{3})(\d{3})(\d{3})(\d{2})/,
+    "$1.$2.$3-$4"
+  );
+}
+
+function formatPhone(value: string) {
+  if (!value) return "";
+
+  const cleaned = value.replace(/\D/g, "");
+
+  if (cleaned.length !== 11) return value;
+
+  return cleaned.replace(
+    /(\d{2})(\d{5})(\d{4})/,
+    "($1) $2-$3"
+  );
+}
+
+function formatDate(value: string) {
+  if (!value) return "";
+
+  const cleaned = value.replace(/\D/g, "");
+
+  if (cleaned.length !== 8) return value;
+
+  return cleaned.replace(
+    /(\d{2})(\d{2})(\d{4})/,
+    "$1/$2/$3"
+  );
+}
+
   return (
 
     <>
@@ -59,10 +104,17 @@ const handleLogout = async () => {
       <Card className="w-full max-w-2xl rounded-sm border-none shadow-none ring-0">
         {/* HEADER */}
         <CardHeader className="flex flex-row items-center gap-4">
-          <Avatar className="h-20 w-20">
-            <AvatarImage src={user?.photoURL ?? undefined} alt={userData.name} />
-            <AvatarFallback></AvatarFallback>
-          </Avatar>
+
+          {user.photoURL ? (
+            <img
+              src={user.photoURL}
+              className="h-14 w-14 rounded-full object-cover"
+            />
+          ) : (
+            <div className="h-14 w-14 rounded-full bg-secondary text-primary flex items-center justify-center font-semibold">
+              {initial}
+            </div>
+          )}
 
           <div className="flex flex-col">
             <CardTitle className="">{userData.name}</CardTitle>
@@ -91,7 +143,7 @@ const handleLogout = async () => {
               <Phone className="h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="text-sm font-medium">Telefone</p>
-                <p className="text-sm text-muted-foreground">{userData.phone}</p>
+                <p className="text-sm text-muted-foreground">{formatPhone(userData.phone)}</p>
               </div>
             </div>
           </div>
@@ -103,7 +155,7 @@ const handleLogout = async () => {
               <Calendar className="h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="text-sm font-medium">Nascimento</p>
-                <p className="text-sm text-muted-foreground">{userData.nascimento}</p>
+                <p className="text-sm text-muted-foreground">{formatDate(userData.nascimento)}</p>
               </div>
             </div>
           </div>
@@ -114,7 +166,7 @@ const handleLogout = async () => {
               <FileUser className="h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="text-sm font-medium">CPF</p>
-                <p className="text-sm text-muted-foreground">{userData.cpf}</p>
+                <p className="text-sm text-muted-foreground">{formatCpf(userData.cpf)}</p>
               </div>
             </div>
           </div>
