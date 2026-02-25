@@ -270,7 +270,6 @@ async function enviarpagamento() {
   </DialogContent>
 </Dialog>
 
-
     </main>
   );
 }

@@ -4,8 +4,7 @@ import {
   Headset,
   UserRound,
   Loader2,
-  CheckCircle2,
-  AlertCircle,
+  Menu
 } from "lucide-react";
 import Link from "next/link";
 import { useUser } from "@/lib/user";
@@ -19,6 +18,16 @@ import { useState } from "react";
 import { z } from "zod";
 import { cpf as cpfValidator } from "cpf-cnpj-validator";
 import { PatternFormat } from "react-number-format";
+import { FaTrophy } from "react-icons/fa6";
+import { BiSolidMegaphone } from "react-icons/bi";
+import { BsFillTicketFill } from "react-icons/bs";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 
 import {
   Dialog,
@@ -32,6 +41,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import AvatarMenu from "@/components/avatar";
+import { FaBoxOpen } from "react-icons/fa";
+import { 
+  Trophy, 
+  Ticket, 
+  Megaphone, 
+  LayoutGrid, 
+} from "lucide-react"
 
 export default function Navbar() {
   const { user } = useUser();
@@ -186,46 +202,99 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full bg-primary text-secondary">
-        <nav className="mx-auto flex max-w-2xl items-center justify-between px-4 py-3">
-          <div className="absolute left-1/2 -translate-x-1/2 text-center">
-            <Link
-              href="/"
-              className="text-base sm:text-lg md:text-xl font-semibold tracking-tight"
-            >
-              1 CENTAVO 1000 NO PIX HOJE!
-            </Link>
-          </div>
 
-          <div className="flex items-center gap-2">
-            {/* SUPORTE */}
-            <Dialog open={supportOpen} onOpenChange={setSupportOpen}>
-              <DialogTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Headset className="h-5 w-5" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogTitle>Suporte</DialogTitle>
-                <p>Fale com nosso suporte via WhatsApp.</p>
-              </DialogContent>
-            </Dialog>
-
-            {/* LOGIN / AVATAR */}
-            {!user ? (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setOpen(true)}
-              >
-                <UserRound className="h-5 w-5" />
+    <header className="sticky top-0 z-50 w-full bg-primary text-secondary">
+      <nav className="mx-auto flex max-w-2xl items-center justify-between px-4 py-3 relative">
+        
+        {/* 1. ESQUERDA: Novo Ícone (Menu Hambúrguer) */}
+        <div className="flex items-center">
+<Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="">
+                <Menu className="h-6 w-6" />
               </Button>
-            ) : (
-              <AvatarMenu />
-            )}
-          </div>
-        </nav>
-      </header>
+            </SheetTrigger>
+            
+            {/* side="left" faz o menu vir da esquerda */}
+            <SheetContent side="left" className="w-[280px] bg-background p-0">
+              <SheetHeader className="p-6 border-b text-left">
+                <SheetTitle className="text-2xl font-black italic tracking-tighter"></SheetTitle>
+              </SheetHeader>
+
+              <div className="flex flex-col gap-2 p-4">
+                
+                <Link href="/campaigns" className="flex items-center gap-3 px-4 py-2 hover:bg-muted rounded-md group transition-all">
+                  <div className="bg-primary text-secondary w-9 h-9 flex items-center justify-center rounded-sm font-bold">
+                    <FaBoxOpen size={18} />
+                  </div>
+                  <span className="font-bold text-sm">CAMPANHAS</span>
+                </Link>
+
+                {/* <Link href="/meus-titulos" className="flex items-center gap-3 px-4 py-2 hover:bg-muted rounded-md group transition-all">
+                  <div className="bg-primary text-secondary w-9 h-9 flex items-center justify-center rounded-sm font-bold">
+                    <BsFillTicketFill size={18} />
+                  </div>
+                  <span className="font-bold text-sm">MEUS TÍTULOS</span>
+                </Link> */}
+
+                <Link href="/announcements" className="flex items-center gap-3 px-4 py-2 hover:bg-muted rounded-md group transition-all">
+                  <div className="bg-primary text-secondary w-9 h-9 flex items-center justify-center rounded-sm font-bold">
+                    <BiSolidMegaphone size={18} />
+                  </div>
+                  <span className="font-bold text-sm">COMUNICADOS</span>
+                </Link>
+
+                <Link href="/winners" className="flex items-center gap-3 px-4 py-2 hover:bg-muted rounded-md group transition-all">
+                  <div className="bg-primary text-secondary w-9 h-9 flex items-center justify-center rounded-sm font-bold">
+                    <FaTrophy size={18} />
+                  </div>
+                  <span className="font-bold text-sm">GANHADORES</span>
+                </Link>
+
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        <div className="absolute left-1/2 -translate-x-1/2 text-center w-max">
+          <Link
+            href="/"
+            className="text-base sm:text-lg font-semibold tracking-tight whitespace-nowrap"
+          >
+            1 CENTAVO 1000 NO PIX HOJE!
+          </Link>
+        </div>
+
+        {/* 3. DIREITA: Suporte e Login */}
+        <div className="flex items-center gap-1 sm:gap-2">
+          {/* SUPORTE */}
+          <Dialog open={supportOpen} onOpenChange={setSupportOpen}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Headset className="h-5 w-5" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogTitle>Suporte</DialogTitle>
+              <p>Fale com nosso suporte via WhatsApp.</p>
+            </DialogContent>
+          </Dialog>
+
+          {/* LOGIN / AVATAR */}
+          {!user ? (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setOpen(true)}
+            >
+              <UserRound className="h-5 w-5" />
+            </Button>
+          ) : (
+            <AvatarMenu />
+          )}
+        </div>
+      </nav>
+    </header>
 
       {/* MODAL */}
       <Dialog open={open} onOpenChange={setOpen}>
