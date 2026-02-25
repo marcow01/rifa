@@ -262,7 +262,7 @@ export default function Navbar() {
             className="text-base sm:text-lg font-semibold tracking-tight whitespace-nowrap"
           >
             {/* 1 CENTAVO 1000 NO PIX HOJE! */}
-            <img src="/logo.png" alt="logo" className="w-[200px]"/>
+            <img src="/logo.jpeg" alt="logo" className="w-[270px]"/>
             {/* Logo adicionada aqui */}
           </Link>
         </div>
