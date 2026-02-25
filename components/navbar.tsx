@@ -261,7 +261,8 @@ export default function Navbar() {
             href="/"
             className="text-base sm:text-lg font-semibold tracking-tight whitespace-nowrap"
           >
-            1 CENTAVO 1000 NO PIX HOJE!
+            {/* 1 CENTAVO 1000 NO PIX HOJE! */}
+            <img src="/logocrjota.png" alt="logo" className="w-[200px]"/>
           </Link>
         </div>
 
