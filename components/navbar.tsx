@@ -152,10 +152,10 @@ export default function Navbar() {
       return;
     }
 
-    if (!isAdult(nascimento)) {
-      setErrorMessage("Você precisa ter no mínimo 18 anos.");
-      return;
-    }
+    // if (!isAdult(nascimento)) {
+    //   setErrorMessage("Você precisa ter no mínimo 18 anos.");
+    //   return;
+    // }
 
     try {
       setStatus("loading");
