@@ -179,7 +179,7 @@ async function enviarpagamento() {
                         <CardTitle className="font-bold text-3xl">+{amount}</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-lg text-center text-muted-foreground">SELECIONAR</p>
+                            <p className="text-sm sm:text-base md:text-lg">SELECIONAR</p>
                         </CardContent>
                     </Card>
                 </button>
