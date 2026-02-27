@@ -44,9 +44,9 @@ export default function Page() {
   useEffect(() => {
     if (!window.YT) return;
 
-    if (video === 1) criarPlayer("D3Mkr-8edWE");
+    if (video === 1) criarPlayer("Y08_8ZBMDmc");
     if (video === 2) criarPlayer("Rf8lfUgAlak");
-    if (video === 3) criarPlayer("IPO0ctvYxyg");
+    if (video === 3) criarPlayer("D3Mkr-8edWE");
   }, [video]);
 
   const criarPlayer = (videoId: string) => {
