@@ -11,7 +11,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore"
 import { onSnapshot } from "firebase/firestore";
 import { useProfile } from "@/lib/useprofile";
 import { QRCodeSVG } from "qrcode.react";
-import Timer from "@/components/timer"
+import PixTimer from "@/components/timer"
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import Image from 'next/image'
@@ -118,7 +118,9 @@ async function enviarpagamento() {
     <main className="py-2">
       <div className="mx-auto w-full max-w-2xl px-4">
 
-        <div className="relative w-full h-[300px] overflow-hidden rounded-2xl group">
+        <PixTimer dueDate="pix-timer-1"/>
+
+        <div className="relative w-full h-[300px] overflow-hidden rounded-2xl group mt-4">
   {/* A Imagem de Fundo */}
   <img
     src="/banner.jpg" 

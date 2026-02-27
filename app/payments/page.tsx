@@ -88,10 +88,10 @@ useEffect(() => {
               <a>
                 [{payment.startNumber} ~
               </a>
-                <a>{payment.endNumber}]</a>
+                <a>{payment.endNumber + 1}]</a>
             </div>
 
-            <a className="text-sm text-muted-foreground">total de números: {payment.endNumber - payment.startNumber}</a>
+            <a className="text-sm text-muted-foreground">total de números: {payment.endNumber - payment.startNumber + 1}</a>
 
             </>
           )}

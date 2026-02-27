@@ -16,53 +16,58 @@ function formatTime(ms: number) {
 
 export default function PixTimer({ dueDate }: Props) {
   const [timeLeft, setTimeLeft] = useState<number | null>(null)
-  const totalMsRef = useRef<number | null>(null)
+  const totalMsRef = useRef<number>(15 * 60 * 1000)
 
-useEffect(() => {
-    // IGNORAMOS a data da API para evitar erro de fuso/formato 12h/24h.
-    // Usamos o 'agora' do computador do usuário.
-    const startTime = Date.now();
-    const target = startTime + (3000 * 1000); // 50 minutos cravados
+  useEffect(() => {
+    const STORAGE_KEY = "pix_expiration_time"
+
+    let target = localStorage.getItem(STORAGE_KEY)
+
+    // 🔥 Se não existir, cria um novo timer de 15 minutos
+    if (!target) {
+      const newTarget = Date.now() + (15 * 60 * 1000)
+      localStorage.setItem(STORAGE_KEY, String(newTarget))
+      target = String(newTarget)
+    }
+
+    const targetTime = Number(target)
 
     const updateTime = () => {
-      const now = Date.now();
-      const remaining = target - now;
+      const now = Date.now()
+      const remaining = targetTime - now
+      setTimeLeft(remaining)
+    }
 
-      if (totalMsRef.current === null) {
-        totalMsRef.current = 3000 * 1000;
-      }
+    updateTime()
 
-      setTimeLeft(remaining);
-    };
+    const interval = setInterval(updateTime, 1000)
+    return () => clearInterval(interval)
 
-    updateTime();
-
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-}, [dueDate]); // Mantemos o dueDate aqui para que, se gerar um novo Pix, o timer resete
+  }, [dueDate])
 
   if (timeLeft === null) return null
 
   if (timeLeft <= 0) {
-    return <p className="font-medium">Tempo de pagamento esgotado!</p>
+    localStorage.removeItem("pix_expiration_time")
+    return <p className=""></p>
   }
 
-  const totalMs = totalMsRef.current ?? (3000 * 1000)
-  // Inverti a lógica da barra para ela esvaziar conforme o tempo passa (opcional)
-  const progresstimer = Math.max(0, Math.min(100, (timeLeft / totalMs) * 100))
+  const progress = Math.max(
+    0,
+    Math.min(100, (timeLeft / totalMsRef.current) * 100)
+  )
 
   return (
-    <div className="">
-      <p className="flex justify-center gap-2 items-center text-sm md:text-sm font-medium tracking-tight text-muted-foreground leading-tight text-center">
-      
+    <div>
+      <p className="flex justify-center gap-2 items-center text-sm font-medium tracking-tight text-muted-foreground text-center">
         Você tem{" "}
-        <span className="ap-2 items-center text-xl sm:text-2xl md:text-3xl lg:text-3xl font-extrabold text-primary text-green-700">
+        <span className="text-2xl font-extrabold text-primary">
           {formatTime(timeLeft)}
         </span>{" "}
-        para pagar!
+        para aproveitar a promoção de fichas!
       </p>
 
-      <Progress value={progresstimer} className="h-2" />
+      <Progress value={progress} className="h-2 mt-2" />
     </div>
   )
 }
