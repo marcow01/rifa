@@ -49,7 +49,7 @@ const handleLogin = async () => {
     }
 };
 
-    const [value, setValue] = useState(1980)
+    const [value, setValue] = useState(100)
 
 async function enviarpagamento() {
     if (!user || !hasProfile) {
@@ -196,11 +196,11 @@ async function enviarpagamento() {
             <div className="flex items-center gap-2 rounded-xl border p-2 justify-center">
                 
                 <div>
-                    <Button size="icon" variant="ghost" onClick={() => setValue((v) => 1980)} className="cursor-pointer">
+                    <Button size="icon" variant="ghost" onClick={() => setValue((v) => 100)} className="cursor-pointer">
                         <Trash2 className="h-4 w-4" />
                     </Button>
                     <Button size="icon" variant="ghost" onClick={() => setValue((v) => Math.max(10, v - 1)) }
-            disabled={value <= 1980} className="cursor-pointer">
+            disabled={value <= 100} className="cursor-pointer">
                         <Minus className="h-4 w-4" />
                     </Button>
                 </div>
